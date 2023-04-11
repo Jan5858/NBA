@@ -28,9 +28,7 @@ public class MainTest {
     private final List<String> playerLinks = getPlayerLinks();
 
 
-
-    public List<String> getPlayerLinks()
-    {
+    public List<String> getPlayerLinks() {
         Main main = new Main();
         JsonArray response = main.getPlayerData();
 
@@ -48,18 +46,17 @@ public class MainTest {
         List<String> playerlinks = new ArrayList<>();
         playerList.forEach(player ->
         {
-            String playerName = player.firstName()+"-"+ player.lastName();
-            playerName = playerName.replace(".","");
-            String URL = "https://www.nba.com/player/"+player.globalTeamID()+"/"+ playerName;
-            playerlinks.add(URL.replace(" ","-"));
+            String playerName = player.firstName() + "-" + player.lastName();
+            playerName = playerName.replace(".", "");
+            String URL = "https://www.nba.com/player/" + player.globalTeamID() + "/" + playerName;
+            playerlinks.add(URL.replace(" ", "-"));
         });
         return playerlinks;
 
     }
 
     @BeforeMethod
-    public void setUp()
-    {
+    public void setUp() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -70,15 +67,13 @@ public class MainTest {
 
 
     @AfterMethod
-    public void tearDown()
-    {
-            driver.quit();
-   }
+    public void tearDown() {
+        driver.quit();
+    }
 
 
     @Test(invocationCount = 17)
-    public void testMain()
-    {
+    public void testMain() {
 
         System.out.println("break here");
 
@@ -91,18 +86,17 @@ public class MainTest {
                 .perform();
 
 
-        float vsota=0;
-        for(int indeks = 1; indeks <= 5; indeks++ )
-        {
-            WebElement prvaVrstica = driver.findElement((By.xpath("//tbody/tr["+indeks+"]/td[9]")));
+        float vsota = 0;
+        for (int indeks = 1; indeks <= 5; indeks++) {
+            WebElement prvaVrstica = driver.findElement((By.xpath("//tbody/tr[" + indeks + "]/td[9]")));
             String prva = prvaVrstica.getText();
-            vsota = vsota+ Integer.parseInt(prva);
+            vsota = vsota + Integer.parseInt(prva);
             System.out.println(prva);
         }
 
         float povprecje = vsota / 5;
 
-        assertTrue(povprecje >1,"Povprecje je nad ena");
+        assertTrue(povprecje > 1, "Povprecje je nad ena");
 
     }
 }
